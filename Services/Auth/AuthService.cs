@@ -40,7 +40,7 @@ namespace WareHouseManagement.Services.Auth
 
 		public async Task<ApiResponse<object>> Login(LoginRequestDTO loginRequestDTO)
 		{
-			ApplicationUser user = _db.Users.FirstOrDefault(x => x.UserName.ToLower() == loginRequestDTO.Username.ToLower());
+			ApplicationUser user = _db.Users.FirstOrDefault(x => x.Email.ToLower() == loginRequestDTO.Email.ToLower());
 
 			if (user == null)
 			{
@@ -48,7 +48,7 @@ namespace WareHouseManagement.Services.Auth
 				_res.StatusCode = HttpStatusCode.NotFound;
 				_res.Errors = new Dictionary<string, List<string>>
 						{
-							{ nameof(LoginRequestDTO.Username), new List<string> { $"Email không tồn tại." }}
+							{ nameof(LoginRequestDTO.Email), new List<string> { $"Email không tồn tại." }}
 						};
 				return _res;
 			}
@@ -80,7 +80,7 @@ namespace WareHouseManagement.Services.Auth
 				_res.StatusCode = HttpStatusCode.BadRequest;
 				_res.Errors = new Dictionary<string, List<string>>
 						{
-							{ nameof(LoginRequestDTO.Username), new List<string> { $"Không thể đăng nhập." }}
+							{ nameof(LoginRequestDTO.Email), new List<string> { $"Không thể đăng nhập." }}
 						};
 				_res.Result = new LoginRequestDTO();
 				return _res;
